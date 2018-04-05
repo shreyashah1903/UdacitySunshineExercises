@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.sunshine.ForecastAdapter.ForecastAdapterOnClickHandler;
 import com.example.android.sunshine.data.SunshinePreferences;
@@ -211,6 +212,19 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
         return true;
     }
 
+    private void openMapLocation(){
+        String address = "Tajmahal";
+        Uri location = Uri.parse("geo:0,0?q="+address);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(location);
+        if(intent.resolveActivity(getPackageManager())!=null){
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(this,"Error!",Toast.LENGTH_LONG).show();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -221,8 +235,10 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
             return true;
         }
 
-        // TODO (2) Launch the map when the map menu item is clicked
-
+        // COMPLETED (2) Launch the map when the map menu item is clicked
+        if (id == R.id.action_map) {
+            openMapLocation();
+        }
         return super.onOptionsItemSelected(item);
     }
 }
